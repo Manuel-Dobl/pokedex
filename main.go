@@ -1,6 +1,9 @@
 package main
 
+import "github.com/Manuel-Dobl/pokedex/internal/pokeapi"
+
 func main() {
 
-	startRepl()
+	client := pokeapi.Client{}
+	startRepl(&client)
 }

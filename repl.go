@@ -5,7 +5,23 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/Manuel-Dobl/pokedex/internal/pokeapi"
 )
+
+type cliCommand struct {
+	name        string
+	description string
+	callback    func(*config) error
+}
+
+type config struct {
+	next     *string
+	previous *string
+	client   *pokeapi.Client
+}
+
+var commands map[string]cliCommand
 
 func cleanInput(text string) []string {
 
@@ -15,7 +31,37 @@ func cleanInput(text string) []string {
 
 }
 
-func startRepl() {
+func startRepl(client *pokeapi.Client) {
+
+	commands = map[string]cliCommand{
+		"exit": {
+			name:        "exit",
+			description: "Exit the Pokedex",
+			callback:    commandExit,
+		},
+
+		"help": {
+			name:        "help",
+			description: "Explains the Pokedex",
+			callback:    commandHelp,
+		},
+
+		"map": {
+			name:        "map",
+			description: "Displays the names of 20 locations in the Pokemon world, next call will display the next 20",
+			callback:    commandMap,
+		},
+
+		"mapb": {
+			name:        "mapb",
+			description: "Displays the names of previous 20 locations in the Pokemon world, next call will display the previous 20",
+			callback:    commandMapb,
+		},
+	}
+
+	cfg := &config{
+		client: client,
+	}
 
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -28,7 +74,15 @@ func startRepl() {
 			continue
 		}
 		firstWord := cleaned[0]
-		fmt.Printf("Your command was: %v\n", firstWord)
+		cmd, ok := commands[firstWord]
+		if !ok {
+			fmt.Println("Uknown command")
+		} else {
+			err := cmd.callback(cfg)
+			if err != nil {
+				fmt.Println(err)
+			}
+		}
 
 	}
 
