@@ -10,7 +10,7 @@ func commandMapb(cfg *config) error {
 
 		return errors.New("you're on the first page")
 	}
-	resp, err := cfg.client.ListLocations(cfg.previous)
+	resp, err := cfg.pokeapiClient.ListLocations(cfg.previous)
 	if err != nil {
 		return err
 	}

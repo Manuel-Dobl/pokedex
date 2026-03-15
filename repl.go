@@ -16,9 +16,9 @@ type cliCommand struct {
 }
 
 type config struct {
-	next     *string
-	previous *string
-	client   *pokeapi.Client
+	next          *string
+	previous      *string
+	pokeapiClient pokeapi.Client
 }
 
 var commands map[string]cliCommand
@@ -31,7 +31,7 @@ func cleanInput(text string) []string {
 
 }
 
-func startRepl(client *pokeapi.Client) {
+func startRepl(cfg *config) {
 
 	commands = map[string]cliCommand{
 		"exit": {
@@ -57,10 +57,6 @@ func startRepl(client *pokeapi.Client) {
 			description: "Displays the names of previous 20 locations in the Pokemon world, next call will display the previous 20",
 			callback:    commandMapb,
 		},
-	}
-
-	cfg := &config{
-		client: client,
 	}
 
 	scanner := bufio.NewScanner(os.Stdin)
