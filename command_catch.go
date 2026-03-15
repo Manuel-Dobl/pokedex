@@ -8,7 +8,7 @@ import (
 func commandCatch(cfg *config, args []string) error {
 
 	if len(args) == 0 {
-		return fmt.Errorf("no pokeon name provided")
+		return fmt.Errorf("no Pokemon name provided")
 	}
 
 	resp, err := cfg.pokeapiClient.GetPokemon(args[0])

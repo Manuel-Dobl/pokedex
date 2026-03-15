@@ -61,14 +61,24 @@ func startRepl(cfg *config) {
 
 		"explore": {
 			name:        "explore",
-			description: "Shows you what pokemon live in the area you explore",
+			description: "Shows you what Pokemon live in the area you explore",
 			callback:    commandExplore,
 		},
 
 		"catch": {
 			name:        "catch",
-			description: "Throws a pokeball at a pokemon",
+			description: "Throws a pokeball at a Pokemon",
 			callback:    commandCatch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "Shows you info on a Pokemon",
+			callback:    commandInspect,
+		},
+		"pokedex": {
+			name:        "pokedex",
+			description: "Shows you the Pokemon you have caught. Gotta catch 'em all!",
+			callback:    commandPokedex,
 		},
 	}
 
